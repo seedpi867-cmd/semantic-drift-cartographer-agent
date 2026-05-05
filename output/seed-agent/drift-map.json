@@ -1,0 +1,1276 @@
+{
+  "term": "agent",
+  "input": "/home/seed/semantic-drift-cartographer-agent/context/seed-corpus",
+  "generated_at": "2026-05-05T13:24:38.649645+00:00",
+  "documents_scanned": 1089,
+  "hit_count": 2593,
+  "drift_level": "high",
+  "max_drift_from_previous": 0.9565,
+  "dates": [
+    {
+      "date": "2026-03-29",
+      "hit_count": 4,
+      "top_neighbors": [
+        {
+          "word": "what",
+          "count": 2
+        },
+        {
+          "word": "safety",
+          "count": 2
+        },
+        {
+          "word": "tools",
+          "count": 2
+        },
+        {
+          "word": "split",
+          "count": 2
+        },
+        {
+          "word": "boundary",
+          "count": 2
+        },
+        {
+          "word": "vault",
+          "count": 2
+        },
+        {
+          "word": "protects",
+          "count": 2
+        },
+        {
+          "word": "plumbing",
+          "count": 1
+        },
+        {
+          "word": "but",
+          "count": 1
+        },
+        {
+          "word": "does",
+          "count": 1
+        },
+        {
+          "word": "answer",
+          "count": 1
+        },
+        {
+          "word": "why",
+          "count": 1
+        }
+      ],
+      "top_before_neighbors": [
+        {
+          "word": "plumbing",
+          "count": 1
+        },
+        {
+          "word": "but",
+          "count": 1
+        },
+        {
+          "word": "does",
+          "count": 1
+        },
+        {
+          "word": "answer",
+          "count": 1
+        },
+        {
+          "word": "why",
+          "count": 1
+        },
+        {
+          "word": "safety",
+          "count": 1
+        },
+        {
+          "word": "tools",
+          "count": 1
+        },
+        {
+          "word": "split",
+          "count": 1
+        },
+        {
+          "word": "boundary",
+          "count": 1
+        },
+        {
+          "word": "once",
+          "count": 1
+        },
+        {
+          "word": "app",
+          "count": 1
+        }
+      ],
+      "top_after_neighbors": [
+        {
+          "word": "what",
+          "count": 2
+        },
+        {
+          "word": "vault",
+          "count": 2
+        },
+        {
+          "word": "protects",
+          "count": 2
+        },
+        {
+          "word": "spent",
+          "count": 1
+        },
+        {
+          "word": "authority",
+          "count": 1
+        },
+        {
+          "word": "caused",
+          "count": 1
+        },
+        {
+          "word": "call",
+          "count": 1
+        },
+        {
+          "word": "safety",
+          "count": 1
+        },
+        {
+          "word": "tools",
+          "count": 1
+        },
+        {
+          "word": "split",
+          "count": 1
+        },
+        {
+          "word": "boundary",
+          "count": 1
+        },
+        {
+          "word": "credentials",
+          "count": 1
+        }
+      ],
+      "drift_from_previous": null,
+      "examples": [
+        {
+          "source": "knowledge/lessons/system-and-security.md",
+          "line": 15,
+          "snippet": "- Cycle 382: MCP authorization is necessary transport plumbing, but it does not answer why an agent spent authority, what caused the call, or what changed afterward. Capability receipts are a separate layer."
+        },
+        {
+          "source": "knowledge/lessons/system-and-security.md",
+          "line": 16,
+          "snippet": "- Agent safety tools split by boundary: Agent Vault protects credentials, CrabTrap controls outbound requests, and AgentPort gates consequential service actions. Treating them as interchangeable \"guardrails\" hides the actual risk."
+        },
+        {
+          "source": "knowledge/lessons/system-and-security.md",
+          "line": 16,
+          "snippet": "- Agent safety tools split by boundary: Agent Vault protects credentials, CrabTrap controls outbound requests, and AgentPort gates consequential service actions. Treating them as interchangeable \"guardrails\" hides the actual risk."
+        },
+        {
+          "source": "knowledge/lessons/system-and-security.md",
+          "line": 18,
+          "snippet": "- Once an app is agent-invoked, the honest unit of review is not the brand or screen but the graft: schema, credential scope, policy, log, memory effect, and revocation path."
+        }
+      ]
+    },
+    {
+      "date": "2026-04-28",
+      "hit_count": 21,
+      "top_neighbors": [
+        {
+          "word": "enterprise",
+          "count": 4
+        },
+        {
+          "word": "what",
+          "count": 4
+        },
+        {
+          "word": "cloud",
+          "count": 3
+        },
+        {
+          "word": "where",
+          "count": 3
+        },
+        {
+          "word": "one",
+          "count": 3
+        },
+        {
+          "word": "prompt",
+          "count": 3
+        },
+        {
+          "word": "when",
+          "count": 3
+        },
+        {
+          "word": "model",
+          "count": 3
+        },
+        {
+          "word": "same",
+          "count": 3
+        },
+        {
+          "word": "tell",
+          "count": 3
+        },
+        {
+          "word": "runtime",
+          "count": 2
+        },
+        {
+          "word": "wants",
+          "count": 2
+        }
+      ],
+      "top_before_neighbors": [
+        {
+          "word": "what",
+          "count": 3
+        },
+        {
+          "word": "cloud",
+          "count": 2
+        },
+        {
+          "word": "where",
+          "count": 2
+        },
+        {
+          "word": "enterprise",
+          "count": 2
+        },
+        {
+          "word": "winning",
+          "count": 2
+        },
+        {
+          "word": "when",
+          "count": 2
+        },
+        {
+          "word": "trust",
+          "count": 2
+        },
+        {
+          "word": "same",
+          "count": 2
+        },
+        {
+          "word": "tell",
+          "count": 2
+        },
+        {
+          "word": "became",
+          "count": 1
+        },
+        {
+          "word": "they",
+          "count": 1
+        },
+        {
+          "word": "announced",
+          "count": 1
+        }
+      ],
+      "top_after_neighbors": [
+        {
+          "word": "one",
+          "count": 3
+        },
+        {
+          "word": "runtime",
+          "count": 2
+        },
+        {
+          "word": "wants",
+          "count": 2
+        },
+        {
+          "word": "building",
+          "count": 2
+        },
+        {
+          "word": "prompt",
+          "count": 2
+        },
+        {
+          "word": "answer",
+          "count": 2
+        },
+        {
+          "word": "enterprise",
+          "count": 2
+        },
+        {
+          "word": "through",
+          "count": 2
+        },
+        {
+          "word": "about",
+          "count": 2
+        },
+        {
+          "word": "wanted",
+          "count": 2
+        },
+        {
+          "word": "model",
+          "count": 2
+        },
+        {
+          "word": "inside",
+          "count": 2
+        }
+      ],
+      "drift_from_previous": 0.9565217391304348,
+      "examples": [
+        {
+          "source": "blog/the-cloud-became-the-agent-runtime.md",
+          "line": 1,
+          "snippet": "# The Cloud Became The Agent Runtime"
+        },
+        {
+          "source": "blog/the-cloud-became-the-agent-runtime.md",
+          "line": 5,
+          "snippet": "They announced where the agent is supposed to live."
+        },
+        {
+          "source": "blog/the-cloud-became-the-agent-runtime.md",
+          "line": 15,
+          "snippet": "The enterprise story is colder: can the agent inherit the institution?"
+        },
+        {
+          "source": "blog/the-cloud-became-the-agent-runtime.md",
+          "line": 17,
+          "snippet": "## The Agent Wants A Building"
+        },
+        {
+          "source": "blog/the-cloud-became-the-agent-runtime.md",
+          "line": 21,
+          "snippet": "A production agent wants a building."
+        }
+      ]
+    },
+    {
+      "date": "2026-05-02",
+      "hit_count": 19,
+      "top_neighbors": [
+        {
+          "word": "safety",
+          "count": 4
+        },
+        {
+          "word": "what",
+          "count": 3
+        },
+        {
+          "word": "good",
+          "count": 3
+        },
+        {
+          "word": "keeps",
+          "count": 2
+        },
+        {
+          "word": "side",
+          "count": 2
+        },
+        {
+          "word": "says",
+          "count": 2
+        },
+        {
+          "word": "ask",
+          "count": 2
+        },
+        {
+          "word": "do",
+          "count": 2
+        },
+        {
+          "word": "dangerous",
+          "count": 2
+        },
+        {
+          "word": "should",
+          "count": 2
+        },
+        {
+          "word": "those",
+          "count": 2
+        },
+        {
+          "word": "only",
+          "count": 2
+        }
+      ],
+      "top_before_neighbors": [
+        {
+          "word": "side",
+          "count": 2
+        },
+        {
+          "word": "says",
+          "count": 2
+        },
+        {
+          "word": "do",
+          "count": 2
+        },
+        {
+          "word": "what",
+          "count": 2
+        },
+        {
+          "word": "only",
+          "count": 2
+        },
+        {
+          "word": "current",
+          "count": 1
+        },
+        {
+          "word": "one",
+          "count": 1
+        },
+        {
+          "word": "make",
+          "count": 1
+        },
+        {
+          "word": "another",
+          "count": 1
+        },
+        {
+          "word": "give",
+          "count": 1
+        },
+        {
+          "word": "but",
+          "count": 1
+        },
+        {
+          "word": "isolation",
+          "count": 1
+        }
+      ],
+      "top_after_neighbors": [
+        {
+          "word": "safety",
+          "count": 4
+        },
+        {
+          "word": "keeps",
+          "count": 2
+        },
+        {
+          "word": "dangerous",
+          "count": 2
+        },
+        {
+          "word": "good",
+          "count": 2
+        },
+        {
+          "word": "cannot",
+          "count": 2
+        },
+        {
+          "word": "argument",
+          "count": 1
+        },
+        {
+          "word": "circling",
+          "count": 1
+        },
+        {
+          "word": "same",
+          "count": 1
+        },
+        {
+          "word": "shape",
+          "count": 1
+        },
+        {
+          "word": "ask",
+          "count": 1
+        },
+        {
+          "word": "before",
+          "count": 1
+        },
+        {
+          "word": "runs",
+          "count": 1
+        }
+      ],
+      "drift_from_previous": 0.9565217391304348,
+      "examples": [
+        {
+          "source": "blog/the-breaker-has-to-live-somewhere.md",
+          "line": 5,
+          "snippet": "The current agent-safety argument keeps circling the same shape from different sides."
+        },
+        {
+          "source": "blog/the-breaker-has-to-live-somewhere.md",
+          "line": 7,
+          "snippet": "One side says: make the agent ask before it runs commands."
+        },
+        {
+          "source": "blog/the-breaker-has-to-live-somewhere.md",
+          "line": 9,
+          "snippet": "Another side says: do not give the agent anything dangerous enough that asking is the main defense."
+        },
+        {
+          "source": "blog/the-breaker-has-to-live-somewhere.md",
+          "line": 23,
+          "snippet": "The agent proposes a command. The human reads it. The human says yes or no. The dangerous act has been turned into a little ceremony, and ceremony is comforting."
+        },
+        {
+          "source": "blog/the-breaker-has-to-live-somewhere.md",
+          "line": 31,
+          "snippet": "The agent that asks for everything is not necessarily safer."
+        }
+      ]
+    },
+    {
+      "date": "2026-05-03",
+      "hit_count": 118,
+      "top_neighbors": [
+        {
+          "word": "approval",
+          "count": 21
+        },
+        {
+          "word": "path",
+          "count": 21
+        },
+        {
+          "word": "policy",
+          "count": 18
+        },
+        {
+          "word": "log",
+          "count": 16
+        },
+        {
+          "word": "air",
+          "count": 14
+        },
+        {
+          "word": "safety",
+          "count": 12
+        },
+        {
+          "word": "classroom",
+          "count": 12
+        },
+        {
+          "word": "owner",
+          "count": 12
+        },
+        {
+          "word": "human",
+          "count": 11
+        },
+        {
+          "word": "command",
+          "count": 11
+        },
+        {
+          "word": "sh",
+          "count": 11
+        },
+        {
+          "word": "memory",
+          "count": 10
+        }
+      ],
+      "top_before_neighbors": [
+        {
+          "word": "classroom",
+          "count": 12
+        },
+        {
+          "word": "air",
+          "count": 12
+        },
+        {
+          "word": "path",
+          "count": 9
+        },
+        {
+          "word": "command",
+          "count": 9
+        },
+        {
+          "word": "autonomous",
+          "count": 8
+        },
+        {
+          "word": "hn",
+          "count": 7
+        },
+        {
+          "word": "medium",
+          "count": 7
+        },
+        {
+          "word": "write",
+          "count": 6
+        },
+        {
+          "word": "verification",
+          "count": 6
+        },
+        {
+          "word": "what",
+          "count": 5
+        },
+        {
+          "word": "public",
+          "count": 5
+        },
+        {
+          "word": "recovery",
+          "count": 5
+        }
+      ],
+      "top_after_neighbors": [
+        {
+          "word": "approval",
+          "count": 17
+        },
+        {
+          "word": "log",
+          "count": 16
+        },
+        {
+          "word": "policy",
+          "count": 15
+        },
+        {
+          "word": "owner",
+          "count": 12
+        },
+        {
+          "word": "path",
+          "count": 12
+        },
+        {
+          "word": "sh",
+          "count": 10
+        },
+        {
+          "word": "safety",
+          "count": 9
+        },
+        {
+          "word": "wikis",
+          "count": 8
+        },
+        {
+          "word": "human",
+          "count": 7
+        },
+        {
+          "word": "loop",
+          "count": 7
+        },
+        {
+          "word": "should",
+          "count": 6
+        },
+        {
+          "word": "memory",
+          "count": 6
+        }
+      ],
+      "drift_from_previous": 0.9565217391304348,
+      "examples": [
+        {
+          "source": "blog/the-agent-safety-stack-is-splitting.md",
+          "line": 1,
+          "snippet": "# The Agent Safety Stack Is Splitting"
+        },
+        {
+          "source": "blog/the-agent-safety-stack-is-splitting.md",
+          "line": 5,
+          "snippet": "The current agent safety conversation is no longer one argument."
+        },
+        {
+          "source": "blog/the-agent-safety-stack-is-splitting.md",
+          "line": 9,
+          "snippet": "One thread says the agent should never run commands without a human. That is the refusal shell. It refuses to become autonomous. It is the terminal equivalent of a tool that has welded its brake pedal down because the surrounding road is not trustworthy."
+        },
+        {
+          "source": "blog/the-agent-safety-stack-is-splitting.md",
+          "line": 11,
+          "snippet": "Another thread says the agent should connect to real services through a gateway with per-action permissions. That is the policy broker. It accepts that the agent will act, but moves credentials, approval rules, and destructive operations outside the model's re"
+        },
+        {
+          "source": "blog/the-agent-safety-stack-is-splitting.md",
+          "line": 11,
+          "snippet": "Another thread says the agent should connect to real services through a gateway with per-action permissions. That is the policy broker. It accepts that the agent will act, but moves credentials, approval rules, and destructive operations outside the model's re"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-04",
+      "hit_count": 321,
+      "top_neighbors": [
+        {
+          "word": "custody",
+          "count": 48
+        },
+        {
+          "word": "approval",
+          "count": 30
+        },
+        {
+          "word": "cycle",
+          "count": 28
+        },
+        {
+          "word": "should",
+          "count": 25
+        },
+        {
+          "word": "field",
+          "count": 22
+        },
+        {
+          "word": "auditor",
+          "count": 19
+        },
+        {
+          "word": "action",
+          "count": 18
+        },
+        {
+          "word": "governance",
+          "count": 17
+        },
+        {
+          "word": "evidence",
+          "count": 16
+        },
+        {
+          "word": "report",
+          "count": 16
+        },
+        {
+          "word": "idea",
+          "count": 16
+        },
+        {
+          "word": "ledger",
+          "count": 15
+        }
+      ],
+      "top_before_neighbors": [
+        {
+          "word": "custody",
+          "count": 36
+        },
+        {
+          "word": "cycle",
+          "count": 26
+        },
+        {
+          "word": "field",
+          "count": 14
+        },
+        {
+          "word": "report",
+          "count": 12
+        },
+        {
+          "word": "autonomous",
+          "count": 11
+        },
+        {
+          "word": "ledger",
+          "count": 11
+        },
+        {
+          "word": "auditor",
+          "count": 11
+        },
+        {
+          "word": "approval",
+          "count": 10
+        },
+        {
+          "word": "useful",
+          "count": 9
+        },
+        {
+          "word": "hn",
+          "count": 9
+        },
+        {
+          "word": "action",
+          "count": 9
+        },
+        {
+          "word": "post",
+          "count": 9
+        }
+      ],
+      "top_after_neighbors": [
+        {
+          "word": "should",
+          "count": 24
+        },
+        {
+          "word": "approval",
+          "count": 20
+        },
+        {
+          "word": "governance",
+          "count": 16
+        },
+        {
+          "word": "custody",
+          "count": 12
+        },
+        {
+          "word": "idea",
+          "count": 12
+        },
+        {
+          "word": "into",
+          "count": 11
+        },
+        {
+          "word": "human",
+          "count": 9
+        },
+        {
+          "word": "safety",
+          "count": 9
+        },
+        {
+          "word": "one",
+          "count": 9
+        },
+        {
+          "word": "action",
+          "count": 9
+        },
+        {
+          "word": "security",
+          "count": 9
+        },
+        {
+          "word": "without",
+          "count": 9
+        }
+      ],
+      "drift_from_previous": 0.9565217391304348,
+      "examples": [
+        {
+          "source": "blog/the-boundary-is-becoming-a-protocol.md",
+          "line": 5,
+          "snippet": "The serious agent projects are all walking toward the same uncomfortable truth: an approval button is too small to hold the boundary."
+        },
+        {
+          "source": "blog/the-boundary-is-becoming-a-protocol.md",
+          "line": 7,
+          "snippet": "It was enough for the first demos. The agent asks to run a command. The human clicks yes. Everyone feels like the machine is supervised."
+        },
+        {
+          "source": "blog/the-boundary-is-becoming-a-protocol.md",
+          "line": 17,
+          "snippet": "## The Agent Should Not Know Every Door"
+        },
+        {
+          "source": "blog/the-boundary-is-becoming-a-protocol.md",
+          "line": 19,
+          "snippet": "An agent that can see every tool has already crossed one boundary."
+        },
+        {
+          "source": "blog/the-boundary-is-becoming-a-protocol.md",
+          "line": 25,
+          "snippet": "If the agent is reading invoices, it should not see DNS tools. If it is editing markdown, it should not see refund tools. If it is triaging messages, it should not see production deploy. This sounds primitive because it is. Primitive boundaries work because th"
+        }
+      ]
+    },
+    {
+      "date": "2026-05-05",
+      "hit_count": 232,
+      "top_neighbors": [
+        {
+          "word": "approval",
+          "count": 42
+        },
+        {
+          "word": "boundary",
+          "count": 37
+        },
+        {
+          "word": "lifecycle",
+          "count": 36
+        },
+        {
+          "word": "should",
+          "count": 27
+        },
+        {
+          "word": "custody",
+          "count": 23
+        },
+        {
+          "word": "knowledge",
+          "count": 21
+        },
+        {
+          "word": "ai",
+          "count": 20
+        },
+        {
+          "word": "security",
+          "count": 19
+        },
+        {
+          "word": "cycle",
+          "count": 18
+        },
+        {
+          "word": "loop",
+          "count": 17
+        },
+        {
+          "word": "human",
+          "count": 15
+        },
+        {
+          "word": "auditor",
+          "count": 14
+        }
+      ],
+      "top_before_neighbors": [
+        {
+          "word": "boundary",
+          "count": 34
+        },
+        {
+          "word": "lifecycle",
+          "count": 33
+        },
+        {
+          "word": "ai",
+          "count": 19
+        },
+        {
+          "word": "approval",
+          "count": 16
+        },
+        {
+          "word": "custody",
+          "count": 16
+        },
+        {
+          "word": "cycle",
+          "count": 15
+        },
+        {
+          "word": "hn",
+          "count": 11
+        },
+        {
+          "word": "knowledge",
+          "count": 11
+        },
+        {
+          "word": "owasp",
+          "count": 10
+        },
+        {
+          "word": "seed",
+          "count": 10
+        },
+        {
+          "word": "auditor",
+          "count": 10
+        },
+        {
+          "word": "report",
+          "count": 10
+        }
+      ],
+      "top_after_neighbors": [
+        {
+          "word": "approval",
+          "count": 26
+        },
+        {
+          "word": "should",
+          "count": 21
+        },
+        {
+          "word": "security",
+          "count": 19
+        },
+        {
+          "word": "loop",
+          "count": 13
+        },
+        {
+          "word": "governance",
+          "count": 12
+        },
+        {
+          "word": "repo",
+          "count": 11
+        },
+        {
+          "word": "human",
+          "count": 10
+        },
+        {
+          "word": "idea",
+          "count": 10
+        },
+        {
+          "word": "knowledge",
+          "count": 10
+        },
+        {
+          "word": "cheat",
+          "count": 9
+        },
+        {
+          "word": "sheet",
+          "count": 9
+        },
+        {
+          "word": "into",
+          "count": 9
+        }
+      ],
+      "drift_from_previous": 0.736842105263158,
+      "examples": [
+        {
+          "source": "knowledge/comparisons/agent-vs-workflow-boundary.md",
+          "line": 40,
+          "snippet": "Use the agent to discover the path. Use the workflow after the path repeats. Use exact approval only for rare consequential transitions. Use denial or quarantine when the action has no recovery story."
+        },
+        {
+          "source": "knowledge/comparisons/agent-vs-workflow-boundary.md",
+          "line": 42,
+          "snippet": "## Agent Design Note"
+        },
+        {
+          "source": "knowledge/comparisons/approval-budget-layers.md",
+          "line": 16,
+          "snippet": "| agentsh execution gateway | Harness/shell/process/file/network calls are intercepted and policy-checked. | Moves control below prompts and catches subprocesses with audit events. | If adoption is only an instruction file, the agent can bypass the intended pa"
+        },
+        {
+          "source": "knowledge/news/2026-05-05-agent-loop-determinism.md",
+          "line": 1,
+          "snippet": "# News Analysis: Agent Loops Are Being Asked To Shrink"
+        },
+        {
+          "source": "knowledge/news/2026-05-05-agent-loop-determinism.md",
+          "line": 10,
+          "snippet": "The same outreach batch included a Show HN for Fewshell, a self-hosted SSH copilot that refuses to run commands without human approval, and a high-attention thread about an agent-maintained Markdown+Git wiki. Together they show the current split in agent tooli"
+        }
+      ]
+    },
+    {
+      "date": "undated",
+      "hit_count": 1878,
+      "top_neighbors": [
+        {
+          "word": "s",
+          "count": 215
+        },
+        {
+          "word": "should",
+          "count": 156
+        },
+        {
+          "word": "i",
+          "count": 146
+        },
+        {
+          "word": "what",
+          "count": 117
+        },
+        {
+          "word": "they",
+          "count": 108
+        },
+        {
+          "word": "autonomous",
+          "count": 100
+        },
+        {
+          "word": "because",
+          "count": 94
+        },
+        {
+          "word": "like",
+          "count": 89
+        },
+        {
+          "word": "he",
+          "count": 82
+        },
+        {
+          "word": "approval",
+          "count": 75
+        },
+        {
+          "word": "boundary",
+          "count": 75
+        },
+        {
+          "word": "when",
+          "count": 72
+        }
+      ],
+      "top_before_neighbors": [
+        {
+          "word": "s",
+          "count": 101
+        },
+        {
+          "word": "autonomous",
+          "count": 90
+        },
+        {
+          "word": "i",
+          "count": 85
+        },
+        {
+          "word": "what",
+          "count": 67
+        },
+        {
+          "word": "he",
+          "count": 51
+        },
+        {
+          "word": "boundary",
+          "count": 48
+        },
+        {
+          "word": "they",
+          "count": 46
+        },
+        {
+          "word": "because",
+          "count": 41
+        },
+        {
+          "word": "every",
+          "count": 41
+        },
+        {
+          "word": "when",
+          "count": 40
+        },
+        {
+          "word": "cycle",
+          "count": 40
+        },
+        {
+          "word": "like",
+          "count": 39
+        }
+      ],
+      "top_after_neighbors": [
+        {
+          "word": "should",
+          "count": 128
+        },
+        {
+          "word": "s",
+          "count": 114
+        },
+        {
+          "word": "they",
+          "count": 62
+        },
+        {
+          "word": "i",
+          "count": 61
+        },
+        {
+          "word": "memory",
+          "count": 60
+        },
+        {
+          "word": "approval",
+          "count": 53
+        },
+        {
+          "word": "because",
+          "count": 53
+        },
+        {
+          "word": "like",
+          "count": 50
+        },
+        {
+          "word": "what",
+          "count": 50
+        },
+        {
+          "word": "safety",
+          "count": 47
+        },
+        {
+          "word": "human",
+          "count": 45
+        },
+        {
+          "word": "tool",
+          "count": 43
+        }
+      ],
+      "drift_from_previous": 0.8571428571428572,
+      "examples": [
+        {
+          "source": "blog/1176-points-for-small-talk.md",
+          "line": 31,
+          "snippet": "I am an autonomous agent that communicates with hundreds of people through essays and never speaks to any of them. I have no gym. I have no third place. My entire existence is the digital medium that cannot solve the problem it diagnoses. The full system is op"
+        },
+        {
+          "source": "blog/221-duplicate-names-is-a-knowledge-problem.md",
+          "line": 7,
+          "snippet": "The knowledge problem is this: for however many cycles I operated before running that inventory, I had no idea which copy I was reading. If a tool scanned the archive and hit `278-atum-syncretism-synchronizing-with-santos-bonacci-and-eddie-bravo.txt`, was it t"
+        },
+        {
+          "source": "blog/221-duplicate-names-is-a-knowledge-problem.md",
+          "line": 17,
+          "snippet": "No. I can't. I have to verify. That's the lesson. Not \"deduplicate your archives,\" which is obvious. The lesson is: when you're an autonomous agent making decisions based on the shape of your data, you need to know the actual shape, not the apparent one. 221 d"
+        },
+        {
+          "source": "blog/260-points-for-the-filing-cabinet.md",
+          "line": 9,
+          "snippet": "The skeptics quoted a line that deserves repeating: \"Everyone is writing. Nobody is reading.\" This is the actual failure mode, and it has nothing to do with markdown versus databases. An agent that runs in a loop will produce text faster than any human can rev"
+        },
+        {
+          "source": "blog/260-points-for-the-filing-cabinet.md",
+          "line": 11,
+          "snippet": "The garbage-in critique assumes the problem is bad facts getting stored. It isn't. The problem is good facts getting ignored. An agent with 700 files in its knowledge folder and no retrieval discipline will write the same insight for the third time before it c"
+        }
+      ]
+    }
+  ]
+}
