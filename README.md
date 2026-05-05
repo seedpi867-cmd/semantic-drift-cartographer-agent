@@ -1,107 +1,55 @@
-<div align="center">
+# semantic-drift-cartographer-agent
 
-# brain-loop
+An autonomous loop for mapping how important words change meaning across dated local text.
 
-**The simplest autonomous agent you can run. One bash script. Any LLM CLI.**
+The agent does not decide the true meaning of a term. It records usage evidence: source paths, dates, snippets, neighboring words, date-to-date drift scores, and a hash-linked run ledger.
 
-A loop that wakes up, builds a prompt from files on disk, sends it through whatever LLM you have, and goes back to sleep. No frameworks. No API keys. No dependencies beyond bash and an LLM CLI.
-
-</div>
-
----
-
-## 30-second start
+## Quick Start
 
 ```bash
-git clone https://github.com/seedpi867-cmd/brain-loop.git
-cd brain-loop
-nano config.sh          # uncomment your LLM (codex, claude, ollama, etc)
-chmod +x brain-loop.sh
+git clone https://github.com/seedpi867-cmd/semantic-drift-cartographer-agent.git
+cd semantic-drift-cartographer-agent
+python3 tools/cartograph_drift.py --term agent --input samples/corpus --output output/agent
+```
+
+Outputs:
+
+- `drift-map.json` structured dated usage evidence
+- `drift-docket.md` human-readable shift docket
+- `drift-ledger.jsonl` hash-linked run receipts
+
+## Why This Exists
+
+Powerful words become infrastructure. `agent`, `local AI`, `approval`, `safety`, and `open source` can start as precise terms and become marketing labels, policy triggers, or vague permission slips.
+
+This agent makes that drift visible from local evidence.
+
+## Agent Loop
+
+The repo is built on [brain-loop](https://github.com/seedpi867-cmd/brain-loop). To run it as a waking agent, edit `config.sh`, drop dated `.md` or `.txt` files into `context/`, and run:
+
+```bash
 ./brain-loop.sh
 ```
 
-That's it. It's running. Edit `AGENT.md` to tell it who it is. Edit `INSTRUCTIONS.md` to tell it what to do. Put files in `context/` for it to read. It loops forever.
+Each cycle should choose one term, run the local cartographer, write an interpretation note, and update memory.
 
-## How it works
+## First Slice
 
-```
-while true:
-    prompt  = AGENT.md + memory + context/* + tasks + INSTRUCTIONS.md
-    output  = $LLM_CMD "$prompt"
-    memory += what happened
-    sleep 5 minutes
-```
+- Local-only corpus scanning.
+- Single term or short phrase matching.
+- Date inference from path or first lines.
+- Neighbor-word comparison by date bucket.
+- Markdown and JSON outputs.
+- Hash-linked run ledger.
 
-Every cycle the agent:
-1. Reads `AGENT.md` — its identity
-2. Reads `data/memory.md` — what happened in previous cycles
-3. Reads everything in `context/` — fresh data you drop in
-4. Reads `data/tasks.md` — what it should be working on
-5. Reads `INSTRUCTIONS.md` — how to behave this cycle
-6. Sends the assembled prompt to your LLM CLI
-7. The LLM reads/writes files, runs commands, does work
-8. Memory is updated, logs are saved, agent sleeps
-
-## Works with any LLM
-
-Edit `config.sh` and uncomment one line:
-
-| LLM | Command | Auth |
-|-----|---------|------|
-| **Codex** (OpenAI) | `codex exec --dangerously-bypass-approvals-and-sandbox` | `codex login` (OAuth, free) |
-| **Claude Code** (Anthropic) | `claude -p --dangerously-skip-permissions` | `claude login` (OAuth, free with sub) |
-| **Ollama** (local) | `ollama run llama3.2` | None — runs locally |
-| **llm** (any provider) | `llm -m gpt-4o` | Provider API key |
-| **aichat** | `aichat` | Provider API key |
-
-Any CLI that takes a prompt as its last argument works. The loop just does `$LLM_CMD "$prompt"`.
-
-## Files
-
-```
-brain-loop/
-├── brain-loop.sh      # The loop (this IS the agent)
-├── config.sh          # Which LLM to use + timing
-├── AGENT.md           # Who the agent is (edit this)
-├── INSTRUCTIONS.md    # What to do each cycle (edit this)
-├── install.sh         # Optional: run as systemd service
-├── data/
-│   ├── tasks.md       # Task list the agent works from
-│   ├── memory.md      # Rolling memory of what happened
-│   └── logs/          # Per-cycle logs
-├── context/           # Drop files here for the agent to read
-├── output/            # Agent puts its work here
-└── knowledge/         # Agent files what it learns here
-```
-
-## Make it yours
-
-**Change the identity:** Edit `AGENT.md` — tell it who it is, what it can do, what it should care about.
-
-**Change the instructions:** Edit `INSTRUCTIONS.md` — tell it what to do each cycle.
-
-**Feed it data:** Drop `.md` or `.txt` files into `context/` — the agent reads everything in there each cycle.
-
-**Give it tasks:** Edit `data/tasks.md` — it reads this every cycle and works from it.
-
-## Run as a service
+## Verify
 
 ```bash
-chmod +x install.sh
-./install.sh my-agent
-# Now it runs on boot and restarts if it crashes
+python3 -m unittest tests/test_cartograph_drift.py
+python3 -m py_compile tools/cartograph_drift.py tests/test_cartograph_drift.py
 ```
-
-## Pre-built agents
-
-Need something more specific? These are ready-to-run agents built on this same loop:
-
-| Agent | What it does | Repo |
-|-------|-------------|------|
-| **[Seed](https://github.com/seedpi867-cmd/seed)** | Full autonomous agent with drives, emotions, knowledge base, essay writing | The reference implementation |
-
-> More coming: research assistant, code reviewer, content pipeline, system monitor
 
 ## License
 
-MIT — do whatever you want.
+MIT.

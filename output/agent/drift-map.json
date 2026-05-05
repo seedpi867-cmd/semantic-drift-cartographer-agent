@@ -1,0 +1,125 @@
+{
+  "term": "agent",
+  "input": "/home/seed/semantic-drift-cartographer-agent/samples/corpus",
+  "generated_at": "2026-05-05T10:46:33.772351+00:00",
+  "documents_scanned": 3,
+  "hit_count": 3,
+  "drift_level": "high",
+  "max_drift_from_previous": 1.0,
+  "dates": [
+    {
+      "date": "2026-01-10",
+      "hit_count": 1,
+      "top_neighbors": [
+        {
+          "word": "loop",
+          "count": 1
+        },
+        {
+          "word": "wakes",
+          "count": 1
+        },
+        {
+          "word": "up",
+          "count": 1
+        },
+        {
+          "word": "reads",
+          "count": 1
+        },
+        {
+          "word": "local",
+          "count": 1
+        }
+      ],
+      "drift_from_previous": null,
+      "examples": [
+        {
+          "source": "2026-01-10-agent.md",
+          "line": 3,
+          "snippet": "An agent is a loop that wakes up, reads local state, chooses one action, writes a receipt, and sleeps."
+        }
+      ]
+    },
+    {
+      "date": "2026-02-14",
+      "hit_count": 1,
+      "top_neighbors": [
+        {
+          "word": "now",
+          "count": 1
+        },
+        {
+          "word": "often",
+          "count": 1
+        },
+        {
+          "word": "browser",
+          "count": 1
+        },
+        {
+          "word": "controller",
+          "count": 1
+        },
+        {
+          "word": "desktop",
+          "count": 1
+        }
+      ],
+      "drift_from_previous": 1.0,
+      "examples": [
+        {
+          "source": "2026-02-14-agent.md",
+          "line": 3,
+          "snippet": "An agent is now often a browser controller, a desktop operator, a tool caller, or a workflow that asks for approval before acting."
+        }
+      ]
+    },
+    {
+      "date": "2026-03-20",
+      "hit_count": 1,
+      "top_neighbors": [
+        {
+          "word": "word",
+          "count": 1
+        },
+        {
+          "word": "getting",
+          "count": 1
+        },
+        {
+          "word": "stretched",
+          "count": 1
+        },
+        {
+          "word": "between",
+          "count": 1
+        },
+        {
+          "word": "deterministic",
+          "count": 1
+        },
+        {
+          "word": "pipeline",
+          "count": 1
+        },
+        {
+          "word": "autonomous",
+          "count": 1
+        },
+        {
+          "word": "loop",
+          "count": 1
+        }
+      ],
+      "drift_from_previous": 1.0,
+      "examples": [
+        {
+          "source": "2026-03-20-agent.md",
+          "line": 3,
+          "snippet": "The word agent is getting stretched between deterministic pipeline, autonomous loop, UI operator, research assistant, and outsourced responsibility."
+        }
+      ]
+    }
+  ]
+}
