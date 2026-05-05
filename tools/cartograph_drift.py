@@ -25,6 +25,21 @@ STOPWORDS = {
     "that", "the", "their", "then", "there", "this", "to", "was", "with",
     "you", "your",
 }
+DOMAIN_CUES = {
+    "academic", "air", "ai", "assistant", "autonomous", "boundary", "browser",
+    "classroom", "code", "coding", "computer", "concrete", "corpus", "custody",
+    "database", "desktop", "developer", "environmental", "github", "governance",
+    "hardware", "haskell", "human", "knowledge", "language", "lifecycle",
+    "local", "loop", "market", "model", "music", "pi", "pipeline", "research",
+    "semantic", "software", "system", "terminal", "tool", "water", "workflow",
+}
+OBLIGATION_CUES = {
+    "accountability", "approval", "audit", "boundary", "check", "consent",
+    "control", "credential", "duty", "failure", "governance", "handoff",
+    "human", "identity", "ledger", "liability", "log", "must", "owner",
+    "policy", "receipt", "refusal", "review", "risk", "safety", "security",
+    "should", "supervision", "trace", "trust", "verify",
+}
 
 
 @dataclass(frozen=True)
@@ -250,6 +265,7 @@ def build_map(term: str, input_root: Path, output_root: Path) -> dict[str, objec
     (output_root / "drift-map.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     write_docket(result, output_root / "drift-docket.md")
     write_meaning_pressure(result, output_root / "meaning-pressure.md")
+    write_asymmetry_report(result, output_root / "asymmetry-report.md")
     append_receipt(result, output_root / "drift-ledger.jsonl")
     return result
 
@@ -291,11 +307,82 @@ def neighbor_words(bucket: dict[str, object]) -> set[str]:
     return {str(item["word"]) for item in bucket["top_neighbors"]}  # type: ignore[index]
 
 
+def directional_words(bucket: dict[str, object], direction: str) -> set[str]:
+    key = f"top_{direction}_neighbors"
+    return {str(item["word"]) for item in bucket[key]}  # type: ignore[index]
+
+
 def evidence_snippets(bucket: dict[str, object], limit: int = 2) -> list[str]:
     snippets: list[str] = []
     for example in bucket["examples"][:limit]:  # type: ignore[index]
         snippets.append(f"`{example['source']}:{example['line']}` {example['snippet']}")
     return snippets
+
+
+def classify_asymmetry(result: dict[str, object]) -> dict[str, object]:
+    """Compare left-side identity/domain pressure with right-side obligations."""
+    buckets = list(result["dates"])  # type: ignore[arg-type]
+    if not buckets:
+        return {
+            "classification": "insufficient-evidence",
+            "reason": "No dated usage buckets were found.",
+            "before_domain_words": [],
+            "after_obligation_words": [],
+            "before_other_words": [],
+            "after_other_words": [],
+            "directional_overlap": [],
+            "date_notes": [],
+        }
+
+    before_words = set().union(*(directional_words(bucket, "before") for bucket in buckets))
+    after_words = set().union(*(directional_words(bucket, "after") for bucket in buckets))
+    before_domain_words = sorted(before_words & DOMAIN_CUES)
+    after_obligation_words = sorted(after_words & OBLIGATION_CUES)
+    directional_overlap = sorted(before_words & after_words)
+    date_notes = []
+
+    for bucket in buckets:
+        bucket_before = directional_words(bucket, "before")
+        bucket_after = directional_words(bucket, "after")
+        date_notes.append(
+            {
+                "date": bucket["date"],
+                "before_domains": sorted(bucket_before & DOMAIN_CUES),
+                "after_obligations": sorted(bucket_after & OBLIGATION_CUES),
+                "before_top": [item["word"] for item in bucket["top_before_neighbors"][:5]],  # type: ignore[index]
+                "after_top": [item["word"] for item in bucket["top_after_neighbors"][:5]],  # type: ignore[index]
+            }
+        )
+
+    if before_domain_words and after_obligation_words:
+        classification = "domain-to-obligation"
+        reason = (
+            "Words before the term tend to identify the setting or kind of thing, "
+            "while words after the term attach duties, controls, or review pressure."
+        )
+    elif before_domain_words:
+        classification = "domain-weighted"
+        reason = "The clearest directional signal is identity or domain language before the term."
+    elif after_obligation_words:
+        classification = "obligation-weighted"
+        reason = "The clearest directional signal is duty, control, or governance language after the term."
+    elif directional_overlap:
+        classification = "symmetric-or-reused"
+        reason = "The same neighbors recur on both sides, so direction is weak evidence in this corpus."
+    else:
+        classification = "unclear"
+        reason = "The directional neighbors do not match the current domain or obligation cue sets."
+
+    return {
+        "classification": classification,
+        "reason": reason,
+        "before_domain_words": before_domain_words,
+        "after_obligation_words": after_obligation_words,
+        "before_other_words": sorted(before_words - set(before_domain_words))[:24],
+        "after_other_words": sorted(after_words - set(after_obligation_words))[:24],
+        "directional_overlap": directional_overlap,
+        "date_notes": date_notes,
+    }
 
 
 def classify_meaning_pressure(result: dict[str, object]) -> list[dict[str, object]]:
@@ -450,6 +537,46 @@ def write_meaning_pressure(result: dict[str, object], path: Path) -> None:
             "## Reading Rule",
             "",
             "Treat these labels as prompts for review. The report preserves evidence first and avoids claiming a final definition.",
+            "",
+        ]
+    )
+    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+
+
+def write_asymmetry_report(result: dict[str, object], path: Path) -> None:
+    asymmetry = classify_asymmetry(result)
+    lines = [
+        f"# Asymmetry Report: {result['term']}",
+        "",
+        "This report treats word order as evidence. Before-neighbors often name identity or domain; after-neighbors often name obligations, controls, or consequences.",
+        "",
+        f"- Classification: {asymmetry['classification']}",
+        f"- Reason: {asymmetry['reason']}",
+        f"- Before domain cues: {', '.join(asymmetry['before_domain_words']) or 'none'}",
+        f"- After obligation cues: {', '.join(asymmetry['after_obligation_words']) or 'none'}",
+        f"- Directional overlap: {', '.join(asymmetry['directional_overlap']) or 'none'}",
+        "",
+        "## Date Notes",
+        "",
+    ]
+
+    for note in asymmetry["date_notes"]:  # type: ignore[index]
+        before_domains = ", ".join(note["before_domains"]) or "none"
+        after_obligations = ", ".join(note["after_obligations"]) or "none"
+        before_top = ", ".join(str(word) for word in note["before_top"]) or "none"
+        after_top = ", ".join(str(word) for word in note["after_top"]) or "none"
+        lines.append(f"### {note['date']}")
+        lines.append(f"- Before domain cues: {before_domains}")
+        lines.append(f"- After obligation cues: {after_obligations}")
+        lines.append(f"- Before top words: {before_top}")
+        lines.append(f"- After top words: {after_top}")
+        lines.append("")
+
+    lines.extend(
+        [
+            "## Reading Rule",
+            "",
+            "Use this as a directional hypothesis, not a definition. If the same word appears on both sides, inspect examples before treating it as asymmetric evidence.",
             "",
         ]
     )

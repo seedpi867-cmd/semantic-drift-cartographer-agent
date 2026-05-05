@@ -24,6 +24,7 @@ Outputs:
 - `drift-map.json` structured dated usage evidence, including combined and directional neighbor windows
 - `drift-docket.md` human-readable shift docket with before/after neighbor lines
 - `meaning-pressure.md` likely broadening, narrowing, capture, and ambiguity signals
+- `asymmetry-report.md` directional evidence comparing before-neighbor domain cues with after-neighbor obligation cues
 - `drift-ledger.jsonl` hash-linked run receipts
 - `import-manifest.json` source, destination, byte count, and hash for imported corpus files
 
@@ -52,6 +53,7 @@ Each cycle should choose one term, run the local cartographer, write an interpre
 - Neighbor-word comparison by date bucket, with combined, before, and after windows.
 - Markdown and JSON outputs.
 - Meaning-pressure report that names likely semantic pressure from evidence.
+- Asymmetry report that asks whether the left side identifies domains while the right side attaches obligations.
 - Hash-linked run ledger.
 
 ## Verify

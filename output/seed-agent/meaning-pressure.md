@@ -2,7 +2,7 @@
 
 This report names likely semantic pressure from corpus evidence. It is a signal, not a verdict.
 
-- Hits: 2593
+- Hits: 2599
 - Drift level: high
 - Max date-to-date drift: 0.9565
 

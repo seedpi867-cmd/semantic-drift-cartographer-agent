@@ -1,9 +1,9 @@
 {
   "term": "agent",
   "input": "/home/seed/semantic-drift-cartographer-agent/context/seed-corpus",
-  "generated_at": "2026-05-05T13:24:38.649645+00:00",
-  "documents_scanned": 1089,
-  "hit_count": 2593,
+  "generated_at": "2026-05-05T13:36:52.035785+00:00",
+  "documents_scanned": 1090,
+  "hit_count": 2599,
   "drift_level": "high",
   "max_drift_from_previous": 0.9565,
   "dates": [
@@ -1092,11 +1092,11 @@
     },
     {
       "date": "undated",
-      "hit_count": 1878,
+      "hit_count": 1884,
       "top_neighbors": [
         {
           "word": "s",
-          "count": 215
+          "count": 216
         },
         {
           "word": "should",
@@ -1104,7 +1104,7 @@
         },
         {
           "word": "i",
-          "count": 146
+          "count": 147
         },
         {
           "word": "what",
@@ -1132,7 +1132,7 @@
         },
         {
           "word": "approval",
-          "count": 75
+          "count": 76
         },
         {
           "word": "boundary",
@@ -1154,7 +1154,7 @@
         },
         {
           "word": "i",
-          "count": 85
+          "count": 86
         },
         {
           "word": "what",
@@ -1181,11 +1181,11 @@
           "count": 41
         },
         {
-          "word": "when",
-          "count": 40
+          "word": "cycle",
+          "count": 41
         },
         {
-          "word": "cycle",
+          "word": "when",
           "count": 40
         },
         {
@@ -1200,7 +1200,7 @@
         },
         {
           "word": "s",
-          "count": 114
+          "count": 115
         },
         {
           "word": "they",
@@ -1216,7 +1216,7 @@
         },
         {
           "word": "approval",
-          "count": 53
+          "count": 54
         },
         {
           "word": "because",

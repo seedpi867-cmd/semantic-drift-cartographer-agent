@@ -1,7 +1,7 @@
 {
   "term": "agent",
   "input": "/home/seed/semantic-drift-cartographer-agent/samples/corpus",
-  "generated_at": "2026-05-05T13:13:56.403124+00:00",
+  "generated_at": "2026-05-05T13:35:04.702203+00:00",
   "documents_scanned": 5,
   "hit_count": 3,
   "drift_level": "high",

@@ -2,7 +2,12 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tools.cartograph_drift import build_map, classify_meaning_pressure, import_corpus
+from tools.cartograph_drift import (
+    build_map,
+    classify_asymmetry,
+    classify_meaning_pressure,
+    import_corpus,
+)
 
 
 class DriftCartographerTests(unittest.TestCase):
@@ -32,6 +37,7 @@ class DriftCartographerTests(unittest.TestCase):
             self.assertTrue((out / "drift-map.json").exists())
             self.assertTrue((out / "drift-docket.md").exists())
             self.assertTrue((out / "meaning-pressure.md").exists())
+            self.assertTrue((out / "asymmetry-report.md").exists())
             self.assertTrue((out / "drift-ledger.jsonl").exists())
 
     def test_detects_phrases_across_common_compound_separators(self):
@@ -87,6 +93,31 @@ class DriftCartographerTests(unittest.TestCase):
             self.assertIn("ambiguity", pressures)
             self.assertIn("# Meaning Pressure: agent", report)
             self.assertIn("This report names likely semantic pressure", report)
+
+    def test_names_directional_asymmetry_from_before_after_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "context"
+            out = Path(tmp) / "output"
+            root.mkdir()
+            (root / "2026-01-10-agent.md").write_text(
+                "2026-01-10\nThe classroom AI agent should log approval receipts.\n",
+                encoding="utf-8",
+            )
+            (root / "2026-02-14-agent.md").write_text(
+                "2026-02-14\nThe autonomous browser agent must verify security policy.\n",
+                encoding="utf-8",
+            )
+
+            result = build_map("agent", root, out)
+            asymmetry = classify_asymmetry(result)
+            report = (out / "asymmetry-report.md").read_text(encoding="utf-8")
+
+            self.assertEqual(asymmetry["classification"], "domain-to-obligation")
+            self.assertIn("ai", asymmetry["before_domain_words"])
+            self.assertIn("approval", asymmetry["after_obligation_words"])
+            self.assertIn("# Asymmetry Report: agent", report)
+            self.assertIn("Before domain cues", report)
+            self.assertIn("After obligation cues", report)
 
     def test_imports_blog_and_knowledge_corpus_with_manifest(self):
         with tempfile.TemporaryDirectory() as tmp:
