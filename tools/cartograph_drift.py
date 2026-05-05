@@ -14,7 +14,9 @@ from pathlib import Path
 from typing import Iterable
 
 
-WORD_RE = re.compile(r"[A-Za-z][A-Za-z0-9_-]*")
+# Split on punctuation inside compounds so phrase queries still find
+# variants such as "local-AI", "open_source", and "human-approval".
+WORD_RE = re.compile(r"[A-Za-z][A-Za-z0-9]*")
 DATE_RE = re.compile(r"(20\d{2})[-_/](\d{2})[-_/](\d{2})")
 STOPWORDS = {
     "a", "an", "and", "are", "as", "at", "be", "by", "can", "for", "from",

@@ -28,6 +28,32 @@ class DriftCartographerTests(unittest.TestCase):
             self.assertTrue((out / "drift-docket.md").exists())
             self.assertTrue((out / "drift-ledger.jsonl").exists())
 
+    def test_detects_phrases_across_common_compound_separators(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "context"
+            out = Path(tmp) / "output"
+            root.mkdir()
+            (root / "2026-03-01-local-ai.md").write_text(
+                "2026-03-01\nLocal-AI meant models running on your own machine.\n",
+                encoding="utf-8",
+            )
+            (root / "2026-04-01-local-ai.md").write_text(
+                "2026-04-01\nLocal_AI was used for remote services with regional storage.\n",
+                encoding="utf-8",
+            )
+
+            result = build_map("local AI", root, out)
+
+            self.assertEqual(result["hit_count"], 2)
+            self.assertEqual([bucket["date"] for bucket in result["dates"]], ["2026-03-01", "2026-04-01"])
+            snippets = [
+                example["snippet"]
+                for bucket in result["dates"]
+                for example in bucket["examples"]
+            ]
+            self.assertTrue(any("Local-AI" in snippet for snippet in snippets))
+            self.assertTrue(any("Local_AI" in snippet for snippet in snippets))
+
 
 if __name__ == "__main__":
     unittest.main()
