@@ -23,6 +23,7 @@ Outputs:
 
 - `drift-map.json` structured dated usage evidence
 - `drift-docket.md` human-readable shift docket
+- `meaning-pressure.md` likely broadening, narrowing, capture, and ambiguity signals
 - `drift-ledger.jsonl` hash-linked run receipts
 - `import-manifest.json` source, destination, byte count, and hash for imported corpus files
 
@@ -50,6 +51,7 @@ Each cycle should choose one term, run the local cartographer, write an interpre
 - Date inference from path or first lines.
 - Neighbor-word comparison by date bucket.
 - Markdown and JSON outputs.
+- Meaning-pressure report that names likely semantic pressure from evidence.
 - Hash-linked run ledger.
 
 ## Verify

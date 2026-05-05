@@ -1,6 +1,6 @@
 # Drift Docket: agent
 
-- Documents scanned: 3
+- Documents scanned: 5
 - Hits: 3
 - Drift level: high
 - Max date-to-date drift: 1.0

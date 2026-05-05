@@ -2,7 +2,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from tools.cartograph_drift import build_map, import_corpus
+from tools.cartograph_drift import build_map, classify_meaning_pressure, import_corpus
 
 
 class DriftCartographerTests(unittest.TestCase):
@@ -26,6 +26,7 @@ class DriftCartographerTests(unittest.TestCase):
             self.assertIn(result["drift_level"], {"medium", "high"})
             self.assertTrue((out / "drift-map.json").exists())
             self.assertTrue((out / "drift-docket.md").exists())
+            self.assertTrue((out / "meaning-pressure.md").exists())
             self.assertTrue((out / "drift-ledger.jsonl").exists())
 
     def test_detects_phrases_across_common_compound_separators(self):
@@ -53,6 +54,34 @@ class DriftCartographerTests(unittest.TestCase):
             ]
             self.assertTrue(any("Local-AI" in snippet for snippet in snippets))
             self.assertTrue(any("Local_AI" in snippet for snippet in snippets))
+
+    def test_names_likely_meaning_pressure_from_evidence(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "context"
+            out = Path(tmp) / "output"
+            root.mkdir()
+            (root / "2026-01-10-agent.md").write_text(
+                "2026-01-10\nAn agent is a loop that wakes up and reads local state.\n",
+                encoding="utf-8",
+            )
+            (root / "2026-02-14-agent.md").write_text(
+                "2026-02-14\nAn agent is now a browser controller or desktop operator.\n",
+                encoding="utf-8",
+            )
+            (root / "2026-03-20-agent.md").write_text(
+                "2026-03-20\nThe word agent is stretched between pipeline, autonomous loop, and outsourced responsibility.\n",
+                encoding="utf-8",
+            )
+
+            result = build_map("agent", root, out)
+            pressures = {item["pressure"] for item in classify_meaning_pressure(result)}
+            report = (out / "meaning-pressure.md").read_text(encoding="utf-8")
+
+            self.assertIn("broadening", pressures)
+            self.assertIn("capture", pressures)
+            self.assertIn("ambiguity", pressures)
+            self.assertIn("# Meaning Pressure: agent", report)
+            self.assertIn("This report names likely semantic pressure", report)
 
     def test_imports_blog_and_knowledge_corpus_with_manifest(self):
         with tempfile.TemporaryDirectory() as tmp:

@@ -222,6 +222,7 @@ def build_map(term: str, input_root: Path, output_root: Path) -> dict[str, objec
     output_root.mkdir(parents=True, exist_ok=True)
     (output_root / "drift-map.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     write_docket(result, output_root / "drift-docket.md")
+    write_meaning_pressure(result, output_root / "meaning-pressure.md")
     append_receipt(result, output_root / "drift-ledger.jsonl")
     return result
 
@@ -248,6 +249,175 @@ def write_docket(result: dict[str, object], path: Path) -> None:
         for example in bucket["examples"]:
             lines.append(f"- `{example['source']}:{example['line']}` {example['snippet']}")
         lines.append("")
+    path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
+
+
+def neighbor_words(bucket: dict[str, object]) -> set[str]:
+    return {str(item["word"]) for item in bucket["top_neighbors"]}  # type: ignore[index]
+
+
+def evidence_snippets(bucket: dict[str, object], limit: int = 2) -> list[str]:
+    snippets: list[str] = []
+    for example in bucket["examples"][:limit]:  # type: ignore[index]
+        snippets.append(f"`{example['source']}:{example['line']}` {example['snippet']}")
+    return snippets
+
+
+def classify_meaning_pressure(result: dict[str, object]) -> list[dict[str, object]]:
+    """Name likely semantic pressures from neighbor evidence without certainty."""
+    buckets = list(result["dates"])  # type: ignore[arg-type]
+    if not buckets:
+        return [
+            {
+                "pressure": "insufficient-evidence",
+                "confidence": "high",
+                "reason": "No dated usage buckets were found.",
+                "evidence": [],
+            }
+        ]
+
+    first_words = neighbor_words(buckets[0])
+    last_words = neighbor_words(buckets[-1])
+    all_words = [neighbor_words(bucket) for bucket in buckets]
+    cumulative_words = set().union(*all_words) if all_words else set()
+    max_drift = float(result.get("max_drift_from_previous", 0.0))
+    hit_count = int(result.get("hit_count", 0))
+    snippets = " ".join(
+        str(example["snippet"]).lower()
+        for bucket in buckets
+        for example in bucket["examples"]  # type: ignore[index]
+    )
+
+    pressures: list[dict[str, object]] = []
+    first_size = len(first_words)
+    last_size = len(last_words)
+    overlap = len(first_words & last_words)
+
+    ambiguity_cues = {"between", "or", "stretched", "vague", "overloaded", "ambiguous"}
+    capture_cues = {
+        "approval", "browser", "controller", "desktop", "hosted", "interface",
+        "marketing", "operator", "privacy", "regional", "storage", "tools",
+        "workflow",
+    }
+
+    if len(buckets) >= 3 and len(cumulative_words) >= max(8, first_size + 4) and max_drift >= 0.45:
+        pressures.append(
+            {
+                "pressure": "broadening",
+                "confidence": "medium",
+                "reason": (
+                    "The term appears in expanding neighbor contexts rather than staying "
+                    "near one stable cluster."
+                ),
+                "evidence": [
+                    f"First bucket neighbors: {', '.join(sorted(first_words)) or 'none'}",
+                    f"All observed neighbors: {len(cumulative_words)} distinct words across {len(buckets)} buckets",
+                    *evidence_snippets(buckets[-1]),
+                ],
+            }
+        )
+
+    if first_size >= 6 and last_size <= max(3, first_size // 2) and overlap > 0:
+        pressures.append(
+            {
+                "pressure": "narrowing",
+                "confidence": "low",
+                "reason": (
+                    "The later evidence uses fewer neighboring concepts while retaining "
+                    "part of the earlier cluster."
+                ),
+                "evidence": [
+                    f"First bucket has {first_size} neighbor words; last bucket has {last_size}.",
+                    f"Shared words: {', '.join(sorted(first_words & last_words)) or 'none'}",
+                    *evidence_snippets(buckets[-1]),
+                ],
+            }
+        )
+
+    capture_words = sorted(cumulative_words & capture_cues)
+    if capture_words and max_drift >= 0.45:
+        pressures.append(
+            {
+                "pressure": "capture",
+                "confidence": "medium" if len(capture_words) >= 2 else "low",
+                "reason": (
+                    "A later usage cluster is being pulled toward an operational, product, "
+                    "or governance context."
+                ),
+                "evidence": [
+                    f"Capture cue neighbors: {', '.join(capture_words)}",
+                    *evidence_snippets(buckets[-1]),
+                ],
+            }
+        )
+
+    if (max_drift >= 0.75 and overlap == 0 and hit_count >= 2) or any(cue in snippets for cue in ambiguity_cues):
+        pressures.append(
+            {
+                "pressure": "ambiguity",
+                "confidence": "medium",
+                "reason": (
+                    "The term is carrying multiple incompatible or weakly overlapping "
+                    "neighbor clusters."
+                ),
+                "evidence": [
+                    f"First-to-last neighbor overlap: {overlap}",
+                    f"Maximum date-to-date drift: {max_drift:.4f}",
+                    *evidence_snippets(buckets[-1]),
+                ],
+            }
+        )
+
+    if not pressures:
+        pressures.append(
+            {
+                "pressure": "stable-or-insufficient",
+                "confidence": "medium",
+                "reason": (
+                    "The available evidence does not strongly indicate broadening, "
+                    "narrowing, capture, or ambiguity."
+                ),
+                "evidence": [
+                    f"Maximum date-to-date drift: {max_drift:.4f}",
+                    f"Dated buckets: {len(buckets)}",
+                ],
+            }
+        )
+
+    return pressures
+
+
+def write_meaning_pressure(result: dict[str, object], path: Path) -> None:
+    pressures = classify_meaning_pressure(result)
+    lines = [
+        f"# Meaning Pressure: {result['term']}",
+        "",
+        "This report names likely semantic pressure from corpus evidence. It is a signal, not a verdict.",
+        "",
+        f"- Hits: {result['hit_count']}",
+        f"- Drift level: {result['drift_level']}",
+        f"- Max date-to-date drift: {result['max_drift_from_previous']}",
+        "",
+        "## Likely Pressures",
+        "",
+    ]
+
+    for item in pressures:
+        lines.append(f"### {item['pressure']} ({item['confidence']} confidence)")
+        lines.append(str(item["reason"]))
+        lines.append("")
+        for evidence in item["evidence"]:  # type: ignore[index]
+            lines.append(f"- {evidence}")
+        lines.append("")
+
+    lines.extend(
+        [
+            "## Reading Rule",
+            "",
+            "Treat these labels as prompts for review. The report preserves evidence first and avoids claiming a final definition.",
+            "",
+        ]
+    )
     path.write_text("\n".join(lines).rstrip() + "\n", encoding="utf-8")
 
 
