@@ -7,6 +7,7 @@ import argparse
 import hashlib
 import json
 import re
+import shutil
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from datetime import date, datetime, timezone
@@ -43,6 +44,56 @@ def discover_files(root: Path) -> list[Path]:
                 continue
             files.append(path)
     return sorted(files)
+
+
+def file_sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def import_corpus(source_roots: Iterable[Path], output_root: Path) -> dict[str, object]:
+    """Copy Markdown/text files from source roots into a stable local corpus."""
+    imported: list[dict[str, object]] = []
+    seen_destinations: set[Path] = set()
+    output_root.mkdir(parents=True, exist_ok=True)
+
+    for source_root in source_roots:
+        source_root = source_root.resolve()
+        if not source_root.exists():
+            raise FileNotFoundError(f"source directory does not exist: {source_root}")
+        if not source_root.is_dir():
+            raise NotADirectoryError(f"source is not a directory: {source_root}")
+
+        namespace = source_root.name or "source"
+        for source_path in discover_files(source_root):
+            relative_path = source_path.relative_to(source_root)
+            destination_path = output_root / namespace / relative_path
+            if destination_path in seen_destinations:
+                raise FileExistsError(f"duplicate import destination: {destination_path}")
+            seen_destinations.add(destination_path)
+            destination_path.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(source_path, destination_path)
+            imported.append(
+                {
+                    "source": str(source_path),
+                    "imported_as": str(destination_path.relative_to(output_root)),
+                    "bytes": destination_path.stat().st_size,
+                    "sha256": file_sha256(destination_path),
+                }
+            )
+
+    result = {
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+        "output": str(output_root),
+        "documents_imported": len(imported),
+        "documents": imported,
+    }
+    manifest_path = output_root / "import-manifest.json"
+    manifest_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    return result
 
 
 def infer_date(path: Path, text: str) -> str:
@@ -223,12 +274,9 @@ def append_receipt(result: dict[str, object], path: Path) -> None:
         handle.write(json.dumps(receipt, sort_keys=True) + "\n")
 
 
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--term", required=True, help="term or short phrase to map")
-    parser.add_argument("--input", default="context", help="local corpus directory")
-    parser.add_argument("--output", default=None, help="output directory")
-    args = parser.parse_args()
+def run_map(args: argparse.Namespace) -> int:
+    if not args.term:
+        raise SystemExit("--term is required")
 
     input_root = Path(args.input).resolve()
     if not input_root.exists():
@@ -241,6 +289,50 @@ def main() -> int:
         f"{result['drift_level']} drift, output={output_root}"
     )
     return 0
+
+
+def run_import_corpus(args: argparse.Namespace) -> int:
+    result = import_corpus([Path(path) for path in args.sources], Path(args.output).resolve())
+    print(
+        f"imported {result['documents_imported']} documents into "
+        f"{result['output']}/import-manifest.json"
+    )
+    return 0
+
+
+def build_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=__doc__)
+    subparsers = parser.add_subparsers(dest="command")
+
+    import_parser = subparsers.add_parser(
+        "import-corpus",
+        help="copy local Markdown/text directories into a scan-ready corpus",
+    )
+    import_parser.add_argument(
+        "--source",
+        action="append",
+        dest="sources",
+        required=True,
+        help="source directory to import; pass once for blog and once for knowledge",
+    )
+    import_parser.add_argument(
+        "--output",
+        default="context/seed-corpus",
+        help="destination corpus directory",
+    )
+    import_parser.set_defaults(func=run_import_corpus)
+
+    parser.add_argument("--term", help="term or short phrase to map")
+    parser.add_argument("--input", default="context", help="local corpus directory")
+    parser.add_argument("--output", default=None, help="output directory")
+    parser.set_defaults(func=run_map)
+    return parser
+
+
+def main() -> int:
+    parser = build_parser()
+    args = parser.parse_args()
+    return args.func(args)
 
 
 if __name__ == "__main__":

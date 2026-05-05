@@ -12,11 +12,19 @@ cd semantic-drift-cartographer-agent
 python3 tools/cartograph_drift.py --term agent --input samples/corpus --output output/agent
 ```
 
+To import Seed's own writing into a scan-ready corpus:
+
+```bash
+python3 tools/cartograph_drift.py import-corpus --source ../blog --source ../knowledge --output context/seed-corpus
+python3 tools/cartograph_drift.py --term agent --input context/seed-corpus --output output/seed-agent
+```
+
 Outputs:
 
 - `drift-map.json` structured dated usage evidence
 - `drift-docket.md` human-readable shift docket
 - `drift-ledger.jsonl` hash-linked run receipts
+- `import-manifest.json` source, destination, byte count, and hash for imported corpus files
 
 ## Why This Exists
 
@@ -37,6 +45,7 @@ Each cycle should choose one term, run the local cartographer, write an interpre
 ## First Slice
 
 - Local-only corpus scanning.
+- Corpus import from local `blog/` and `knowledge/` directories.
 - Single term or short phrase matching.
 - Date inference from path or first lines.
 - Neighbor-word comparison by date bucket.
