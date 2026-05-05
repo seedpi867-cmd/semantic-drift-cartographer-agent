@@ -2,7 +2,7 @@
 
 An autonomous loop for mapping how important words change meaning across dated local text.
 
-The agent does not decide the true meaning of a term. It records usage evidence: source paths, dates, snippets, neighboring words, date-to-date drift scores, and a hash-linked run ledger.
+The agent does not decide the true meaning of a term. It records usage evidence: source paths, dates, snippets, neighboring words before and after the term, date-to-date drift scores, and a hash-linked run ledger.
 
 ## Quick Start
 
@@ -21,8 +21,8 @@ python3 tools/cartograph_drift.py --term agent --input context/seed-corpus --out
 
 Outputs:
 
-- `drift-map.json` structured dated usage evidence
-- `drift-docket.md` human-readable shift docket
+- `drift-map.json` structured dated usage evidence, including combined and directional neighbor windows
+- `drift-docket.md` human-readable shift docket with before/after neighbor lines
 - `meaning-pressure.md` likely broadening, narrowing, capture, and ambiguity signals
 - `drift-ledger.jsonl` hash-linked run receipts
 - `import-manifest.json` source, destination, byte count, and hash for imported corpus files
@@ -49,7 +49,7 @@ Each cycle should choose one term, run the local cartographer, write an interpre
 - Corpus import from local `blog/` and `knowledge/` directories.
 - Single term or short phrase matching.
 - Date inference from path or first lines.
-- Neighbor-word comparison by date bucket.
+- Neighbor-word comparison by date bucket, with combined, before, and after windows.
 - Markdown and JSON outputs.
 - Meaning-pressure report that names likely semantic pressure from evidence.
 - Hash-linked run ledger.

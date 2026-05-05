@@ -1,7 +1,7 @@
 {
   "term": "local AI",
   "input": "/home/seed/semantic-drift-cartographer-agent/samples/corpus",
-  "generated_at": "2026-05-05T12:55:51.368314+00:00",
+  "generated_at": "2026-05-05T13:13:56.402945+00:00",
   "documents_scanned": 5,
   "hit_count": 2,
   "drift_level": "high",
@@ -11,6 +11,29 @@
       "date": "2026-04-05",
       "hit_count": 1,
       "top_neighbors": [
+        {
+          "word": "meant",
+          "count": 1
+        },
+        {
+          "word": "model",
+          "count": 1
+        },
+        {
+          "word": "running",
+          "count": 1
+        },
+        {
+          "word": "hardware",
+          "count": 1
+        },
+        {
+          "word": "controlled",
+          "count": 1
+        }
+      ],
+      "top_before_neighbors": [],
+      "top_after_neighbors": [
         {
           "word": "meant",
           "count": 1
@@ -45,6 +68,33 @@
       "date": "2026-05-01",
       "hit_count": 1,
       "top_neighbors": [
+        {
+          "word": "started",
+          "count": 1
+        },
+        {
+          "word": "getting",
+          "count": 1
+        },
+        {
+          "word": "used",
+          "count": 1
+        },
+        {
+          "word": "hosted",
+          "count": 1
+        },
+        {
+          "word": "tools",
+          "count": 1
+        },
+        {
+          "word": "promised",
+          "count": 1
+        }
+      ],
+      "top_before_neighbors": [],
+      "top_after_neighbors": [
         {
           "word": "started",
           "count": 1

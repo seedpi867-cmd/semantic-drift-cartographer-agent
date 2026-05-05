@@ -24,6 +24,11 @@ class DriftCartographerTests(unittest.TestCase):
 
             self.assertEqual(result["hit_count"], 2)
             self.assertIn(result["drift_level"], {"medium", "high"})
+            first_bucket = result["dates"][0]
+            before_words = {item["word"] for item in first_bucket["top_before_neighbors"]}
+            after_words = {item["word"] for item in first_bucket["top_after_neighbors"]}
+            self.assertIn("reads", after_words)
+            self.assertNotIn("reads", before_words)
             self.assertTrue((out / "drift-map.json").exists())
             self.assertTrue((out / "drift-docket.md").exists())
             self.assertTrue((out / "meaning-pressure.md").exists())

@@ -33,6 +33,8 @@ class Hit:
     date: str
     line: int
     snippet: str
+    before_neighbors: tuple[str, ...]
+    after_neighbors: tuple[str, ...]
     neighbors: tuple[str, ...]
 
 
@@ -130,9 +132,14 @@ def find_hits(path: Path, root: Path, term: str) -> list[Hit]:
                 continue
             start = max(0, idx - 8)
             end = min(len(words), idx + len(term_words) + 8)
-            neighbors = tuple(
+            before_neighbors = tuple(
                 word
-                for word in words[start:idx] + words[idx + len(term_words) : end]
+                for word in words[start:idx]
+                if word not in STOPWORDS and word not in term_words
+            )
+            after_neighbors = tuple(
+                word
+                for word in words[idx + len(term_words) : end]
                 if word not in STOPWORDS and word not in term_words
             )
             hits.append(
@@ -141,7 +148,9 @@ def find_hits(path: Path, root: Path, term: str) -> list[Hit]:
                     date=doc_date,
                     line=line_no,
                     snippet=line.strip()[:260],
-                    neighbors=neighbors,
+                    before_neighbors=before_neighbors,
+                    after_neighbors=after_neighbors,
+                    neighbors=before_neighbors + after_neighbors,
                 )
             )
     return hits
@@ -151,6 +160,22 @@ def top_neighbors(hits: Iterable[Hit], limit: int = 12) -> list[dict[str, object
     counter: Counter[str] = Counter()
     for hit in hits:
         counter.update(hit.neighbors)
+    return [{"word": word, "count": count} for word, count in counter.most_common(limit)]
+
+
+def top_directional_neighbors(
+    hits: Iterable[Hit],
+    direction: str,
+    limit: int = 12,
+) -> list[dict[str, object]]:
+    counter: Counter[str] = Counter()
+    for hit in hits:
+        if direction == "before":
+            counter.update(hit.before_neighbors)
+        elif direction == "after":
+            counter.update(hit.after_neighbors)
+        else:
+            raise ValueError(f"unknown neighbor direction: {direction}")
     return [{"word": word, "count": count} for word, count in counter.most_common(limit)]
 
 
@@ -181,6 +206,8 @@ def build_map(term: str, input_root: Path, output_root: Path) -> dict[str, objec
                 "date": doc_date,
                 "hit_count": len(hits),
                 "top_neighbors": top_neighbors(hits),
+                "top_before_neighbors": top_directional_neighbors(hits, "before"),
+                "top_after_neighbors": top_directional_neighbors(hits, "after"),
                 "drift_from_previous": drift_from_previous,
                 "examples": [
                     {
@@ -245,6 +272,14 @@ def write_docket(result: dict[str, object], path: Path) -> None:
             f"{item['word']}:{item['count']}" for item in bucket["top_neighbors"]
         )
         lines.append(f"Neighbors: {neighbors or 'none'}")
+        before_neighbors = ", ".join(
+            f"{item['word']}:{item['count']}" for item in bucket["top_before_neighbors"]
+        )
+        after_neighbors = ", ".join(
+            f"{item['word']}:{item['count']}" for item in bucket["top_after_neighbors"]
+        )
+        lines.append(f"Before: {before_neighbors or 'none'}")
+        lines.append(f"After: {after_neighbors or 'none'}")
         lines.append("")
         for example in bucket["examples"]:
             lines.append(f"- `{example['source']}:{example['line']}` {example['snippet']}")

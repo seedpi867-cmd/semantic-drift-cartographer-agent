@@ -1,7 +1,7 @@
 {
   "term": "agent",
   "input": "/home/seed/semantic-drift-cartographer-agent/samples/corpus",
-  "generated_at": "2026-05-05T12:55:51.368416+00:00",
+  "generated_at": "2026-05-05T13:13:56.403124+00:00",
   "documents_scanned": 5,
   "hit_count": 3,
   "drift_level": "high",
@@ -11,6 +11,29 @@
       "date": "2026-01-10",
       "hit_count": 1,
       "top_neighbors": [
+        {
+          "word": "loop",
+          "count": 1
+        },
+        {
+          "word": "wakes",
+          "count": 1
+        },
+        {
+          "word": "up",
+          "count": 1
+        },
+        {
+          "word": "reads",
+          "count": 1
+        },
+        {
+          "word": "local",
+          "count": 1
+        }
+      ],
+      "top_before_neighbors": [],
+      "top_after_neighbors": [
         {
           "word": "loop",
           "count": 1
@@ -66,6 +89,29 @@
           "count": 1
         }
       ],
+      "top_before_neighbors": [],
+      "top_after_neighbors": [
+        {
+          "word": "now",
+          "count": 1
+        },
+        {
+          "word": "often",
+          "count": 1
+        },
+        {
+          "word": "browser",
+          "count": 1
+        },
+        {
+          "word": "controller",
+          "count": 1
+        },
+        {
+          "word": "desktop",
+          "count": 1
+        }
+      ],
       "drift_from_previous": 1.0,
       "examples": [
         {
@@ -83,6 +129,42 @@
           "word": "word",
           "count": 1
         },
+        {
+          "word": "getting",
+          "count": 1
+        },
+        {
+          "word": "stretched",
+          "count": 1
+        },
+        {
+          "word": "between",
+          "count": 1
+        },
+        {
+          "word": "deterministic",
+          "count": 1
+        },
+        {
+          "word": "pipeline",
+          "count": 1
+        },
+        {
+          "word": "autonomous",
+          "count": 1
+        },
+        {
+          "word": "loop",
+          "count": 1
+        }
+      ],
+      "top_before_neighbors": [
+        {
+          "word": "word",
+          "count": 1
+        }
+      ],
+      "top_after_neighbors": [
         {
           "word": "getting",
           "count": 1
